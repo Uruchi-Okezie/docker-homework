@@ -1,0 +1,24 @@
+services:
+  mariadb:
+    image: mariadb
+    restart: always
+    environment:
+      MARIADB_ROOT_PASSWORD: levelup
+      MARIADB_DATABASE: levelup_docker
+      MARIADB_USER: levelup
+      MARIADB_PASSWORD: levelup
+    ports:
+      - "3306:3306"
+
+  app:
+    build: .
+    ports:
+      - "3000:3000"
+    depends_on:
+      - mariadb
+    environment:
+      DB_HOST: mariadb
+      DB_USERNAME: levelup
+      DB_PORT: 3306
+      DB_PASSWORD: levelup
+      DB_DATABASE: levelup_docker
